@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./src/style.css">
+    <title>QR-Code Generator</title>
+    
+  </head>
+  <body class="bg-gray-100 flex flex-col items-center justify-center min-h-screen p-4">
+    <h1 class="text-2xl font-bold mb-4">QR-Code Generator</h1>
+    
+    <input id="inputText" type="text" placeholder="Gib eine Telefonnummer, URL ein"
+        class="p-2 border rounded w-64 mb-2">
+
+    <!-- Buttons für Telefonnummern -->
+    <div id="phoneButtons" class="hidden  gap-2 mb-4">
+        <button id="whatsappBtn" class="bg-green-500 text-white px-4 py-2 rounded">WhatsApp</button>
+        <button id="callBtn" class="bg-blue-500 text-white px-4 py-2 rounded">Anruf</button>
+    </div>
+
+    <!-- Button für URLs & Texte -->
+    <button id="generateTextQRBtn" class="hidden bg-purple-500 text-white px-4 py-2 rounded mb-4">
+        QR-Code generieren
+    </button>
+
+    <!-- QR-Code Container -->
+    <div id="qrCodeContainer" class="m-6 flex flex-col items-center"></div>
+
+  <!-- Zurücksetzen-Button -->
+    <button id="resetBtn" class="hidden bg-gray-500 text-white px-4 py-2 rounded mt-4">
+        Zurücksetzen
+    </button>
+
+    <script type="module" src="/src/main.ts"></script>
+</body>
+</html>
