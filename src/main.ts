@@ -35,6 +35,7 @@ inputText.addEventListener("input", () => {
     } else {
         resetBtn.classList.add("hidden");
     }
+    
 });
 
 // WhatsApp Button
