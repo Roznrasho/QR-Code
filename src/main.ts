@@ -1,57 +1,22 @@
-import './style.css'
+import './style.css';
+import { isValidPhoneNumber, cleanPhoneNumber, displayPhoneQRCode } from './phone';
+import { displayTextQRCode } from './mail';
+import { fetchQRCode } from './qr-service';
 
-// DOM-Elemente mit Fehlerbehandlung
-const getElement = <T extends HTMLElement>(id: string): T => {
-    const element = document.getElementById(id) as T;
-    if (!element) {
-        console.error(`Element mit ID "${id}" nicht gefunden`);
-        throw new Error(`Element mit ID "${id}" nicht gefunden`);
-    }
-    return element;
-};
-
-const inputText = getElement<HTMLInputElement>("inputText");
-const whatsappBtn = getElement<HTMLButtonElement>("whatsappBtn");
-const callBtn = getElement<HTMLButtonElement>("callBtn");
-const generateTextQRBtn = getElement<HTMLButtonElement>("generateTextQRBtn");
-const qrCodeContainer = getElement<HTMLDivElement>("qrCodeContainer");
-const phoneButtons = getElement<HTMLDivElement>("phoneButtons");
-const resetBtn = getElement<HTMLButtonElement>("resetBtn");
-
-// QR-Code Link generieren (Telefonnummer)
-const generateQRCodeLink = (phoneNumber: string, useWhatsApp: boolean): string => {
-    // Wenn useWhatsApp true ist, generiere einen WhatsApp-Link, ansonsten einen Telefon-Link
-    return useWhatsApp ? `https://wa.me/${phoneNumber}` : `tel:${phoneNumber}`;
-};
-
-// QR-Code abrufen
-const fetchQRCode = async (data: string): Promise<string> => {
-    try {
-        // API-URL für den QR-Code-Generator mit den übergebenen Daten
-        const apiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(data)}`;
-        // Abrufen des QR-Codes von der API
-        const response = await fetch(apiUrl);
-        // Wenn die Antwort nicht OK ist, eine Fehlermeldung werfen
-        if (!response.ok) throw new Error("Fehler beim Abrufen des QR-Codes");
-        // Rückgabe der API-URL
-        return apiUrl;
-    } catch (error) {
-        // Fehler im Fehlerfall in der Konsole ausgeben
-        console.error("Fehler:", error);
-        // Rückgabe eines leeren Strings im Fehlerfall
-        return "";
-    }
-};
+const inputText = document.getElementById("inputText") as HTMLInputElement;
+const whatsappBtn = document.getElementById("whatsappBtn") as HTMLButtonElement;
+const callBtn = document.getElementById("callBtn") as HTMLButtonElement;
+const generateTextQRBtn = document.getElementById("generateTextQRBtn") as HTMLButtonElement;
+const qrCodeContainer = document.getElementById("qrCodeContainer") as HTMLDivElement;
+const phoneButtons = document.getElementById("phoneButtons") as HTMLDivElement;
+const resetBtn = document.getElementById("resetBtn") as HTMLButtonElement;
 
 // Buttons je nach Eingabetyp anzeigen
 inputText.addEventListener("input", () => {
-    // Bereinigen des Eingabewerts
     const inputValue = inputText.value.trim();
-    // Entfernen aller nicht-numerischen Zeichen aus dem Eingabewert
-    const phoneNumber = inputValue.replace(/\D/g, "");
 
-    // Wenn die Telefonnummer mindestens 5 Zeichen lang ist, zeige die Telefon-Buttons an
-    if (phoneNumber.length >= 5) {
+    // Wenn die Telefonnummer gültig ist, zeige die Telefon-Buttons an
+    if (isValidPhoneNumber(inputValue)) {
         phoneButtons.classList.remove("hidden");
         generateTextQRBtn.classList.add("hidden");
     // Wenn der Eingabewert länger als 0 Zeichen ist, zeige den Text-QR-Code-Button an
@@ -63,12 +28,44 @@ inputText.addEventListener("input", () => {
         phoneButtons.classList.add("hidden");
         generateTextQRBtn.classList.add("hidden");
     }
+    
     // Zeige den Reset-Button an, wenn eine Eingabe erfolgt
     if (inputValue.length > 0) {
         resetBtn.classList.remove("hidden");
     } else {
         resetBtn.classList.add("hidden");
     }
+});
+
+// WhatsApp Button
+whatsappBtn.addEventListener("click", () => {
+    const phoneNumber = cleanPhoneNumber(inputText.value.trim());
+    if (!phoneNumber) return;
+    displayPhoneQRCode(phoneNumber, true, qrCodeContainer);
+});
+
+// Anruf Button
+callBtn.addEventListener("click", () => {
+    const phoneNumber = cleanPhoneNumber(inputText.value.trim());
+    if (!phoneNumber) return;
+    displayPhoneQRCode(phoneNumber, false, qrCodeContainer);
+});
+
+// QR-Code für URL/Text/E-Mail
+generateTextQRBtn.addEventListener("click", () => {
+    const inputValue = inputText.value.trim();
+    if (!inputValue) return;
+    displayTextQRCode(inputValue, qrCodeContainer);
+});
+
+// Zurücksetzen Button
+resetBtn.addEventListener("click", () => {
+    inputText.value = "";
+    phoneButtons.classList.add("hidden");
+    generateTextQRBtn.classList.add("hidden");
+    qrCodeContainer.innerHTML = "";
+    resetBtn.classList.add("hidden");
+    qrCodeContainer.classList.remove("qr-visible");
 });
 
 // QR-Code anzeigen mit Animation
@@ -87,6 +84,17 @@ const displayQRCode = async (data: string) => {
         qrCodeContainer.classList.add("qr-visible");
     }
 };
+
+// Hilfsfunktion zum Generieren des QR-Code-Links für WhatsApp oder Anruf
+function generateQRCodeLink(phoneNumber: string, isWhatsApp: boolean): string {
+    if (isWhatsApp) {
+        // WhatsApp-Link
+        return `https://wa.me/${phoneNumber}`;
+    } else {
+        // Tel-Link für Anruf
+        return `tel:${phoneNumber}`;
+    }
+}
 
 
 // WhatsApp Button
