@@ -93,3 +93,13 @@ button:hover {
   opacity: 1;
   transform: scale(1);
 }
+
+.hidden {
+    display: none !important;
+}
+
+.qr-visible {
+    opacity: 1;
+    transform: scale(1);
+    transition: all 0.3s ease;
+}

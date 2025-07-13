@@ -1,11 +1,22 @@
 import './style.css'
-const inputText = document.getElementById("inputText") as HTMLInputElement;
-const whatsappBtn = document.getElementById("whatsappBtn") as HTMLButtonElement;
-const callBtn = document.getElementById("callBtn") as HTMLButtonElement;
-const generateTextQRBtn = document.getElementById("generateTextQRBtn") as HTMLButtonElement;
-const qrCodeContainer = document.getElementById("qrCodeContainer") as HTMLDivElement;
-const phoneButtons = document.getElementById("phoneButtons") as HTMLDivElement;
-const resetBtn = document.getElementById("resetBtn") as HTMLButtonElement;
+
+// DOM-Elemente mit Fehlerbehandlung
+const getElement = <T extends HTMLElement>(id: string): T => {
+    const element = document.getElementById(id) as T;
+    if (!element) {
+        console.error(`Element mit ID "${id}" nicht gefunden`);
+        throw new Error(`Element mit ID "${id}" nicht gefunden`);
+    }
+    return element;
+};
+
+const inputText = getElement<HTMLInputElement>("inputText");
+const whatsappBtn = getElement<HTMLButtonElement>("whatsappBtn");
+const callBtn = getElement<HTMLButtonElement>("callBtn");
+const generateTextQRBtn = getElement<HTMLButtonElement>("generateTextQRBtn");
+const qrCodeContainer = getElement<HTMLDivElement>("qrCodeContainer");
+const phoneButtons = getElement<HTMLDivElement>("phoneButtons");
+const resetBtn = getElement<HTMLButtonElement>("resetBtn");
 
 // QR-Code Link generieren (Telefonnummer)
 const generateQRCodeLink = (phoneNumber: string, useWhatsApp: boolean): string => {
