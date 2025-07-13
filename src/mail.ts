@@ -1,4 +1,3 @@
-// Inline QR-Code Service um Import-Probleme zu vermeiden
 const fetchQRCode = async (data: string): Promise<string> => {
     try {
         const apiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(data)}`;
