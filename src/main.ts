@@ -1,6 +1,7 @@
 import './style.css';
 import { isValidPhoneNumber, cleanPhoneNumber, displayPhoneQRCode } from './phone';
 import { displayTextQRCode } from './mail';
+import { resetApplication } from './reset';
 
 const inputText = document.getElementById("inputText") as HTMLInputElement;
 const whatsappBtn = document.getElementById("whatsappBtn") as HTMLButtonElement;
@@ -59,10 +60,5 @@ generateTextQRBtn.addEventListener("click", () => {
 
 // Zurücksetzen Button
 resetBtn.addEventListener("click", () => {
-    inputText.value = "";
-    phoneButtons.classList.add("hidden");
-    generateTextQRBtn.classList.add("hidden");
-    qrCodeContainer.innerHTML = "";
-    resetBtn.classList.add("hidden");
-    qrCodeContainer.classList.remove("qr-visible");
+    resetApplication(inputText, phoneButtons, generateTextQRBtn, qrCodeContainer, resetBtn);
 });
