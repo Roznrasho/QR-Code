@@ -1,14 +1,4 @@
-const fetchQRCode = async (data: string): Promise<string> => {
-    try {
-        const apiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(data)}`;
-        const response = await fetch(apiUrl);
-        if (!response.ok) throw new Error("Fehler beim Abrufen des QR-Codes");
-        return apiUrl;
-    } catch (error) {
-        console.error("Fehler:", error);
-        return "";
-    }
-};
+import { fetchQRCode } from './qr-service';
 
 // E-Mail Link generieren
 export const generateEmailQRCodeLink = (email: string, subject?: string, body?: string): string => {

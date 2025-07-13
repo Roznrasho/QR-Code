@@ -21,20 +21,6 @@ export const isValidPhoneNumber = (input: string): boolean => {
 export const displayPhoneQRCode = async (phoneNumber: string, useWhatsApp: boolean, container: HTMLElement) => {
     try {
         const link = generatePhoneQRCodeLink(phoneNumber, useWhatsApp);
-        
-        // Inline QR-Code Generierung falls Import fehlschlägt
-        const fetchQRCode = async (data: string): Promise<string> => {
-            try {
-                const apiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(data)}`;
-                const response = await fetch(apiUrl);
-                if (!response.ok) throw new Error("Fehler beim Abrufen des QR-Codes");
-                return apiUrl;
-            } catch (error) {
-                console.error("Fehler:", error);
-                return "";
-            }
-        };
-        
         const qrCodeUrl = await fetchQRCode(link);
         
         if (qrCodeUrl) {
