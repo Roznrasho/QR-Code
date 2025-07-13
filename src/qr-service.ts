@@ -16,3 +16,35 @@ export const fetchQRCode = async (data: string): Promise<string> => {
         return "";
     }
 };
+
+// QR-Code als downloadbaren Blob erstellen
+export const createDownloadableQRCode = async (data: string, filename: string = 'qrcode.png'): Promise<string> => {
+    try {
+        const apiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(data)}`;
+        const response = await fetch(apiUrl);
+        
+        if (!response.ok) throw new Error("Fehler beim Abrufen des QR-Codes");
+        
+        // Bild als Blob herunterladen
+        const blob = await response.blob();
+        
+        // Blob-URL erstellen
+        const blobUrl = URL.createObjectURL(blob);
+        
+        // Download-Link erstellen und automatisch klicken
+        const downloadLink = document.createElement('a');
+        downloadLink.href = blobUrl;
+        downloadLink.download = filename;
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+        
+        // Blob-URL nach kurzer Zeit freigeben
+        setTimeout(() => URL.revokeObjectURL(blobUrl), 100);
+        
+        return apiUrl; // Für die Anzeige zurückgeben
+    } catch (error) {
+        console.error("Fehler beim Download:", error);
+        return "";
+    }
+};

@@ -1,4 +1,4 @@
-import { fetchQRCode } from './qr-service';
+import { fetchQRCode, createDownloadableQRCode } from './qr-service';
 
 // E-Mail Link generieren
 export const generateEmailQRCodeLink = (email: string, subject?: string, body?: string): string => {
@@ -44,12 +44,20 @@ export const displayTextQRCode = async (data: string, container: HTMLElement) =>
                 description = 'URL';
             }
             
+            const filename = `qrcode-${description.toLowerCase()}.png`;
+            
             container.innerHTML = `
                 <img src="${qrCodeUrl}" alt="QR Code für ${description}" class="mb-2">
                 <p>QR-Code für ${description}: ${data}</p>
-                <a href="${qrCodeUrl}" download="qrcode-${description.toLowerCase()}.png" class="text-white underline">📥 QR-Code herunterladen</a>
+                <button class="download-btn" data-link="${data}" data-filename="${filename}">📥 QR-Code herunterladen</button>
             `;
             container.classList.add("qr-visible");
+            
+            // Download-Event hinzufügen
+            const downloadBtn = container.querySelector('.download-btn') as HTMLButtonElement;
+            downloadBtn.addEventListener('click', async () => {
+                await createDownloadableQRCode(data, filename);
+            });
         }
     } catch (error) {
         console.error("Fehler beim Anzeigen des QR-Codes:", error);

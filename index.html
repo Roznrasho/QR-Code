@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./src/style.css">
+    <link rel="stylesheet" href="./style.css">
     <title>QR-Code Generator</title>
     
   </head>
@@ -17,17 +17,17 @@
     
         <!-- Buttons für Telefonnummern -->
         <div id="phoneButtons" class="hidden  gap-2 mb-4">
-            <button id="whatsappBtn" class="bg-green-500 text-white px-4 py-2 rounded">WhatsApp QR</button>
-            <button id="callBtn" class="bg-blue-500 text-white px-4 py-2 rounded">Anruf QR</button>
+            <button id="whatsappBtn" class="w-4 h-4"><img src="https://img.icons8.com/?size=100&id=30448&format=png&color=000000" alt="whatsapp-icon"></button>
+            <button id="callBtn" class="w-4 h-4"><img src="https://img.icons8.com/?size=100&id=lHs6XCUEuOfV&format=png&color=000000" alt="anruf-icon"></button>
         </div>
     
         <!-- Button für URLs & Texte -->
-        <button id="generateTextQRBtn" class="hidden bg-purple-500 text-white px-4 py-2 rounded mb-4">
+        <button id="generateTextQRBtn" class="hidden bg-lime-800 text-white px-4 py-2 rounded mb-4">
             QR-Code generieren
         </button>
     
         <!-- QR-Code Container -->
-        <div id="qrCodeContainer" class="m-6 flex flex-col items-center"></div>
+        <div id="qrCodeContainer" class="mt-15 flex flex-col items-center"></div>
     
       <!-- Zurücksetzen-Button -->
         <button id="resetBtn" class="hidden bg-gray-500 text-white px-4 py-2 rounded mt-4">

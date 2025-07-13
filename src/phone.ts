@@ -1,4 +1,4 @@
-import { fetchQRCode } from './qr-service';
+import { fetchQRCode, createDownloadableQRCode } from './qr-service';
 
 // QR-Code Link generieren (Telefonnummer)
 export const generatePhoneQRCodeLink = (phoneNumber: string, useWhatsApp: boolean): string => {
@@ -25,12 +25,20 @@ export const displayPhoneQRCode = async (phoneNumber: string, useWhatsApp: boole
         
         if (qrCodeUrl) {
             const linkType = useWhatsApp ? 'WhatsApp' : 'Anruf';
+            const filename = `qrcode-${linkType.toLowerCase()}-${phoneNumber}.png`;
+            
             container.innerHTML = `
                 <img src="${qrCodeUrl}" alt="QR Code für ${linkType}" class="mb-2">
                 <p>QR-Code für ${linkType}: ${phoneNumber}</p>
-                <a href="${qrCodeUrl}" download="qrcode-${linkType.toLowerCase()}.png" class="text-white underline">📥 QR-Code herunterladen</a>
+                <button class="download-btn" data-link="${link}" data-filename="${filename}">📥 QR-Code herunterladen</button>
             `;
             container.classList.add("qr-visible");
+            
+            // Download-Event hinzufügen
+            const downloadBtn = container.querySelector('.download-btn') as HTMLButtonElement;
+            downloadBtn.addEventListener('click', async () => {
+                await createDownloadableQRCode(link, filename);
+            });
         }
     } catch (error) {
         console.error("Fehler beim Anzeigen des QR-Codes:", error);

@@ -1,4 +1,4 @@
-import './style.css';
+import '../style.css';
 import { isValidPhoneNumber, cleanPhoneNumber, displayPhoneQRCode } from './phone';
 import { displayTextQRCode } from './mail';
 import { resetApplication } from './reset';
