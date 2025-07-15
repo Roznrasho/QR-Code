@@ -42,6 +42,7 @@ input {
   color: black;
   transition: all 0.3s ease;
   text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
 }
 
 input:focus {
@@ -56,7 +57,7 @@ button {
   color: white;
   font-weight: bold;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+ 
   border: none;
   cursor: pointer;
   margin: 0.25rem;
@@ -67,45 +68,19 @@ button:hover {
   transform: scale(1.05);
 }
 
-#phoneButtons {
+/* #phoneButtons {
   display: flex;
   gap: 0.5rem;
   margin-bottom: 1rem;
   justify-content: center;
-}
+} */
 
-.btn-whatsapp {
-  background-color: #22c55e; /* Green */
+#generateTextQRBtn{
+  background-color: #79BA7E;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
 }
-
-.btn-whatsapp:hover {
-  background-color: #16a34a;
-}
-
-.btn-call {
-  background-color: #3b82f6; /* Blue */
-}
-
-.btn-call:hover {
-  background-color: #2563eb;
-}
-
-.btn-generate {
-  background-color: #9333ea; /* Purple */
-  margin-bottom: 1rem;
-}
-
-.btn-generate:hover {
-  background-color: #7e22ce;
-}
-
-.btn-reset {
-  background-color: #4b5563; /* Gray */
-  margin-top: 1rem;
-}
-
-.btn-reset:hover {
-  background-color: #374151;
+#resetBtn {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
 }
 
 #qrCodeContainer {
@@ -122,7 +97,7 @@ button:hover {
   opacity: 1; /* Standardmäßig sichtbar */
   transform: scale(1);
   transition: all 0.5s ease-in-out;
-  margin-bottom: 1rem;
+  margin: 1.5rem;
   border-radius: 0.5rem;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   max-width: 200px;
@@ -163,6 +138,7 @@ button:hover {
   font-weight: bold;
   transition: all 0.3s ease;
   text-decoration: none;
+   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
 }
 
 .download-btn:hover {

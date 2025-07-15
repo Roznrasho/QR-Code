@@ -29,7 +29,7 @@ export const displayPhoneQRCode = async (phoneNumber: string, useWhatsApp: boole
             
             container.innerHTML = `
                 <img src="${qrCodeUrl}" alt="QR Code für ${linkType}" class="mb-2">
-                <p>QR-Code für ${linkType}: ${phoneNumber}</p>
+                <p>QR-Code für ${linkType}</p>
                 <button class="download-btn" data-link="${link}" data-filename="${filename}">📥 QR-Code herunterladen</button>
             `;
             container.classList.add("qr-visible");

@@ -48,7 +48,7 @@ export const displayTextQRCode = async (data: string, container: HTMLElement) =>
             
             container.innerHTML = `
                 <img src="${qrCodeUrl}" alt="QR Code für ${description}" class="mb-2">
-                <p>QR-Code für ${description}: ${data}</p>
+                <p>QR-Code für ${description}</p>
                 <button class="download-btn" data-link="${data}" data-filename="${filename}">📥 QR-Code herunterladen</button>
             `;
             container.classList.add("qr-visible");
